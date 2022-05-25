@@ -1,4 +1,7 @@
-use figment::{providers::Env, Figment};
+use figment::{
+    providers::{Env, Format, Toml},
+    Figment,
+};
 use serde::Deserialize;
 
 fn main() {
@@ -14,6 +17,8 @@ pub struct Config {
 
 impl Config {
     pub fn figment() -> Figment {
-        Figment::new().merge(Env::prefixed("APP_").global())
+        Figment::new()
+            .merge(Env::prefixed("APP_").global())
+            .merge(Toml::file("App.toml"))
     }
 }
